@@ -1,0 +1,143 @@
+<!-- core/templates/base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Kukumzima App{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px 5px 0 0;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+        }
+        .user-info {
+            margin-bottom: 20px;
+            background-color: #f7f7f7;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-info p {
+            margin: 0;
+            font-weight: bold;
+        }
+        .user-actions {
+            margin-top: 10px;
+        }
+        .user-actions a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        .signup-links {
+            margin-top: 10px;
+        }
+        .signup-links a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+        }
+        /* Form Styling */
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Kukumzima</h1>
+        </header>
+        <nav>
+            {% if user.is_authenticated %}
+                <div class="user-info">
+                    <p>Welcome, {{ user.username }}!</p>
+                    <div class="user-actions">
+                        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="signup-links">
+                    <a href="{% url 'login' %}">Login</a> |
+                    <a href="{% url 'farmer_signup' %}">Sign Up as Farmer</a> |
+                    <a href="{% url 'consumer_signup' %}">Sign Up as Consumer</a>
+                </div>
+            {% endif %}
+        </nav>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

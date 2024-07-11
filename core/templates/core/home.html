@@ -1,0 +1,25 @@
+<!-- core/templates/core/home.html -->
+{% extends "core/base.html" %}
+
+{% block content %}
+<body>
+    <h1>Welcome to Farm Consumer App</h1>
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}!</p>
+
+        {% if user.is_farmer %}
+        <p>You are a farmer.</p>
+        <p>your user id is:  F0{{ user.id }}</p>
+        
+        {% elif user.is_consumer %}
+            <p>You are a consumer.</p>
+            <p>your user id is: C0{{ user.id }}</p>
+
+        {% endif %}
+    {% else %}
+        <a href="{% url 'farmer_signup' %}">Sign Up as Farmer</a>
+        <a href="{% url 'consumer_signup' %}">Sign Up as Consumer</a>
+    {% endif %}
+</body>
+
+{% endblock %}
