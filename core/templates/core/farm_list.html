@@ -1,0 +1,10 @@
+<!-- farmers/templates/farmers/farm_list.html -->
+
+{% extends 'core/base.html' %}
+{% block content %}
+<h2>Farm List</h2>
+<ul>
+    {% for farm in farms %}
+        <li>{{ farm.name }} - {{ farm.location }}</li>
+    {% endfor %}
+{% endblock %}

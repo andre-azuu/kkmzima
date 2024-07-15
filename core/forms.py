@@ -1,7 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User, Farmer, Consumer
+from .models import Farm
 
+class FarmForm(forms.ModelForm):
+    class Meta:
+        model = Farm
+        fields = ['farmer', 'name', 'location']
 
 class FarmerSignUpForm(UserCreationForm):
     farmerPhone = forms.CharField(max_length=15, required=False)

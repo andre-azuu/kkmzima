@@ -1,0 +1,12 @@
+<!-- farmers/templates/farmers/farm_detail.html -->
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ farm.name }}</h2>
+<p>Location: {{ farm.location }}</p>
+
+<p>Farmer: {{ farm.farmer.farmerUsername }}</p>
+<a href="{% url 'farm_update' farm.id %}">Edit</a> |
+<a href="{% url 'farm_delete' farm.id %}">Delete</a> |
+<a href="{% url 'farm_list' %}">Back to list</a>
+{% endblock %}

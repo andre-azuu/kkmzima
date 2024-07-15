@@ -20,3 +20,12 @@ class Consumer(models.Model):
     consumerPhone= models.CharField(max_length=15)
     consumerAddress=models.CharField(max_length=100,  blank=True, null=True) 
     consumerEmail = models.EmailField(max_length=100,  blank=True, null=True)
+
+
+class Farm(models.Model):
+    farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    location = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.name    

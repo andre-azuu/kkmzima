@@ -1,0 +1,16 @@
+<!-- core/templates/core/farm_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create New Farm</title>
+</head>
+<body>
+    <h2>Create New Farm</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+
