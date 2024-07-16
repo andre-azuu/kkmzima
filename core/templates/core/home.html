@@ -10,8 +10,8 @@
         {% if user.is_farmer %}
             <p>You are a farmer.</p>
             <p>Your user ID is: F0{{ user.id }}</p>
-            <a href="{% url 'farm_list' %}">My Farms</a>
-            <a href="{% url 'expense_inventory_list' %}">All Expenses</a>
+            <a href="{% url 'farm_list' %}"><button class="btn btn-primary">My Farms</button></a>
+            <a href="{% url 'expense_inventory_list' %}"><button class="btn btn-primary">View all my expenses</button></a>
         
         {% elif user.is_consumer %}
             <p>You are a consumer.</p>

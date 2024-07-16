@@ -240,7 +240,6 @@ class ExpenseInventoryListView(ListView):
         return context
     
 
-
 logger = logging.getLogger(__name__)
 
 @login_required
@@ -255,7 +254,7 @@ def create_order(request, farm_id):
         formset = OrderItemFormSet(request.POST)
         if form.is_valid() and formset.is_valid():
             try:
-                 with transaction.atomic():
+                with transaction.atomic():
                     order = form.save(commit=False)
                     order.consumer = request.user
                     order.farm = farm
@@ -273,6 +272,8 @@ def create_order(request, farm_id):
             except IntegrityError as e:
                 logger.error(f"IntegrityError: {e}")
                 form.add_error(None, "There was an issue saving the order. Please try again.")
+        else:
+            logger.error(f"Form errors: {form.errors}, {formset.errors}")
     else:
         form = OrderForm()
         formset = OrderItemFormSet(queryset=eggInventory.objects.none())

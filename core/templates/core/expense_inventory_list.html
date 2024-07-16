@@ -1,25 +1,51 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-  <h2>Expense Inventory List</h2>
-  <ul>
-    {% for inventory in expense_inventories %}
-      <li>
-        <strong>Farm:</strong> {{ inventory.farm.name }} |
-        <strong>Particulars:</strong> {{ inventory.particulars }} |
-        <strong>Quantity:</strong> {{ inventory.quantity }} |
-        <strong>Unit Price:</strong> {{ inventory.unitPrice }} |
-        <strong>Total Cost:</strong> {{ inventory.total_cost }} |
-        <br>
-        <a href="{% url 'expense_inventory_detail' inventory.pk %}">View</a> |
-        <a href="{% url 'expense_inventory_edit' inventory.pk %}">Edit</a> |
-        <a href="{% url 'expense_inventory_delete' inventory.pk %}">Delete</a>
-      </li>
-    {% empty %}
-      <li>No expense inventories found.</li>
-      <a href="{% url 'expense_inventory_new' %}">Add Item</a>
-      {% endfor %}
-    </ul>
-      <br>
-  <a href="{%url 'farm_list' %}">Home</a>
+<title>Expense Inventory List</title>
+
+{% load sum_total_costs %}
+
+<h2>Expense Inventory List</h2>
+
+{% if expense_inventories %}
+    <table>
+        <thead>
+            <tr>
+                <th>Farm</th>
+                <th>Particulars</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total Cost</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inventory in expense_inventories %}
+            <tr>
+                <td>{{ inventory.farm.name }}</td>
+                <td>{{ inventory.particulars }}</td>
+                <td>{{ inventory.quantity }}</td>
+                <td>{{ inventory.unitPrice }}</td>
+                <td>{{ inventory.total_cost }}</td>
+                <td><a href="{% url 'expense_inventory_detail' inventory.pk %}">View details</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" style="text-align: right;">Total Expenses:</td>
+                <td>{{ expense_inventories|sum_total_costs }}</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+{% else %}
+    <p>No expense inventories found.</p>
+{% endif %}
+
+<br>
+<a href="{% url 'home' %}"><button class="btn btn-primary">Back to Homepage</button></a>
+
+<a href="{% url 'farm_list' %}"><button class="btn btn-primary">My Farms</button></a>
+
 {% endblock %}

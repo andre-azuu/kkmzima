@@ -3,11 +3,11 @@
     <h2>Farm List</h2>
     <ul>
         {% for farm in farms %}
-            <li>
+            
                 <a href="{% url 'farm_detail' farm.id %}">{{ farm.name }}</a> 
                 <a href="{% url 'farm_detail' farm.id %}">{{ farm.location }}</a> 
                 - Total Stock: {{ farm.total_stock }}
-            </li>
+            
         {% empty %}
             <li>No farms found.</li>
             {% endfor %}

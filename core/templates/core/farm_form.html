@@ -1,17 +1,42 @@
-<!-- core/templates/core/farm_form.html -->
 {% extends 'core/base.html' %}
+
 {% block content %}
+<title>{% if object %}Update{% else %}Create{% endif %} Farm</title>
 
 
-<title>Create New Farm</title>
-</head>
-<body>
+
+<div class="form-container">
     <h2>{% if object %}Update{% else %}Create{% endif %} Farm</h2>
-    <form method="post">
+
+    <form id="farm-form" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Submit</button>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+
+        {% if object %}
+            <a href="{% url 'farm_delete' farm.id %}">
+                <button type="button" class="btn btn-danger">Delete Farm</button>
+            </a>
+        {% endif %}
     </form>
-</body>
+</div>
+
 {% endblock %}
 
+{% block extra_js %}
+    <!-- Include any additional JavaScript here -->
+    <script>
+        // Example JavaScript for confirmation on delete button
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButton = document.querySelector('.btn-danger');
+            if (deleteButton) {
+                deleteButton.addEventListener('click', function (event) {
+                    if (!confirm('Are you sure you want to delete this farm?')) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

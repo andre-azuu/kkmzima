@@ -1,11 +1,58 @@
-<!-- core/templates/core/create_egg_inventory.html -->
 {% extends 'core/base.html' %}
 
 {% block content %}
-  <h2>Create Egg Inventory for {{ farm.name }}</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
+<title>Create Egg Inventory for {{ farm.name }}</title>
+
+{% block extra_head %}
+    <style>
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+{% endblock %}
+
+<div class="form-container">
+    <h2>Create Egg Inventory for {{ farm.name }}</h2>
+
+    <form id="egg-inventory-form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn">Save</button>
+    </form>
+</div>
+
+{% block extra_js %}
+    <!-- Include any additional JavaScript here -->
+    <script>
+        // Example JavaScript for form validation
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('egg-inventory-form');
+            if (form) {
+                form.addEventListener('submit', function (event) {
+                    const quantityField = document.getElementById('id_quantity');
+                    const quantity = parseInt(quantityField.value);
+
+                    if (isNaN(quantity) || quantity <= 0) {
+                        alert('Please enter a valid quantity.');
+                        event.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}
+
 {% endblock %}

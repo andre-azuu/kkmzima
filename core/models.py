@@ -29,6 +29,7 @@ class Farm(models.Model):
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=255)
+    numberOfhens = models.PositiveIntegerField()
     
     
     @property
@@ -50,7 +51,7 @@ class eggInventory(models.Model):
 
 
 class EggBatch(models.Model):
-    farm = models.ForeignKey(eggInventory, on_delete=models.CASCADE, related_name='egg_batches')
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, related_name='egg_batches')
     quantity = models.IntegerField()
 
     def __str__(self):
@@ -60,7 +61,7 @@ class expenseInventory(models.Model):
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE, related_name='expense_inventories')
     particulars = models.CharField(max_length=255)
     quantity = models.IntegerField()
-    unitPrice = models.DecimalField(max_digits=10, decimal_places=2)
+    unitPrice = models.IntegerField()
 
 
     @property

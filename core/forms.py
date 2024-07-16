@@ -31,7 +31,7 @@ class eggInventoryForm(forms.ModelForm):
 class FarmForm(forms.ModelForm):
     class Meta:
         model = Farm
-        fields = [ 'name', 'location']
+        fields = [ 'name', 'location', 'numberOfhens']
 
 class FarmerSignUpForm(UserCreationForm):
     farmerPhone = forms.CharField(max_length=15, required=False)

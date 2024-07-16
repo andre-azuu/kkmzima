@@ -1,17 +1,38 @@
-<!-- farmers/templates/farmers/farm_list.html -->
 {% extends 'core/base.html' %}
+{% load sum_total_costs %} 
+
 {% block content %}
     <h2>Farm List</h2>
     <ul>
+        <h1>Farm List</h1>
         {% for farm in farms %}
-            <li>
-                <a href="{% url 'farm_detail' farm.id %}">{{ farm.name }}</a> 
-                <a href="{% url 'farm_detail' farm.id %}">{{ farm.location }}</a> 
-                - Total Stock: {{ farm.total_stock }}
-            </li>
+        <div class="container">
+            <table class="table table-dark table-striped">
+                <tr>
+                    <th><h3>{{ farm.name }}</h3></th>
+                    <th><h3>Farm ID: F0{{ farm.id }}</h3></th>
+                </tr>
+                <tr>
+                    <td><strong>Number of Hens:</strong> {{ farm.numberOfhens }}</td>
+                    <td><strong>Location:</strong> {{ farm.location }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Expenses:</strong> {{ expense_inventories|sum_total_costs }}</td>
+                    <td><strong>Profit/Loss:</strong> {{ farm.profitLoss }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Available Stock:</strong> {{ farm.total_stock }} Trays</td>
+                    <td>
+                        <a href="{% url 'farm_detail' farm.id %}">
+                            <button class="btn btn-primary">Farm Details</button>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
         {% empty %}
-            <li>No farms found.</li>
-            {% endfor %}
-            <a href="{% url 'farm_create' %}">Create farm</a> 
+        <li>No farms found.</li>
+        {% endfor %}
+        <a href="{% url 'farm_create' %}" class="btn btn-primary ">Create New Farm</a>
     </ul>
 {% endblock %}

@@ -4,29 +4,29 @@
   <h2>Expense Inventory Detail</h2>
   <table>
     <tr>
-      <th>Farm</th>
+      <th>Farm: </th>
       <td>{{ object.farm.name }}</td>
     </tr>
     <tr>
-      <th>Particulars</th>
+      <th>Particulars:</th>
       <td>{{ object.particulars }}</td>
     </tr>
     <tr>
-      <th>Quantity</th>
+      <th>Quantity:</th>
       <td>{{ object.quantity }}</td>
     </tr>
     <tr>
-      <th>Unit Price</th>
+      <th>Unit Price: </th>
       <td>{{ object.unitPrice }}</td>
     </tr>
     <tr>
       <th>Total Cost</th>
-      <td>{{ total_cost }}</td>
+      <td>{{ total_cost }} Ksh</td>
     </tr>
   </table>
   <p>
-    <a href="{% url 'expense_inventory_edit' object.pk %}">Edit</a> | 
-    <a href="{% url 'expense_inventory_delete' object.pk %}">Delete</a>
+    <a href="{% url 'expense_inventory_edit' object.pk %}"><button class="btn btn-primary">Edit Info</button></a> |
+        <a href="{% url 'expense_inventory_delete' object.pk %}"><button class="btn btn-danger">Delete item</button></a>
   </p>
   <a href="{% url 'farm_list' %}"> Back to farms</a>|
   <a href="{% url 'expense_inventory_list' %}">View all expenses</a>
