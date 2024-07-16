@@ -1,6 +1,22 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Farmer, Consumer, eggInventory, Farm, expenseInventory
+from .models import User, Farmer, Consumer, eggInventory, Farm, expenseInventory,Order, OrderItem
+
+
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = []
+
+class OrderItemForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields = ['egg_batch', 'quantity']
+
+OrderItemFormSet = forms.inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
+
 
 class ExpenseInventoryForm(forms.ModelForm):
     class Meta:

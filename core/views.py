@@ -12,7 +12,10 @@ from django.core.exceptions import PermissionDenied
 from django.views.generic.edit import CreateView
 from django.urls import reverse
 from django.db.models import Sum
+from django.db import IntegrityError, transaction
 
+from .forms import OrderForm, OrderItemFormSet
+import logging
 
 def home(request):
     return render(request, 'core/home.html')
@@ -237,14 +240,44 @@ class ExpenseInventoryListView(ListView):
         return context
     
 
+
+logger = logging.getLogger(__name__)
+
 @login_required
 def create_order(request, farm_id):
     if not request.user.is_consumer:
         raise PermissionDenied
     farm = get_object_or_404(Farm, pk=farm_id)
-    egg_batches = EggBatch.objects.filter(farm=farm)
-    return render(request, 'core/create_order.html', {'farm': farm, 'egg_batches': egg_batches})
+    egg_batches = eggInventory.objects.filter(farm=farm)  
 
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        formset = OrderItemFormSet(request.POST)
+        if form.is_valid() and formset.is_valid():
+            try:
+                 with transaction.atomic():
+                    order = form.save(commit=False)
+                    order.consumer = request.user
+                    order.farm = farm
+                    order.save()
+                    logger.debug(f"Order created: {order}")
+
+                    for item_form in formset:
+                        if item_form.cleaned_data:
+                            order_item = item_form.save(commit=False)
+                            order_item.order = order
+                            order_item.save()
+                            logger.debug(f"OrderItem created: {order_item}")
+                    
+                    return redirect('order_detail', order_id=order.id)
+            except IntegrityError as e:
+                logger.error(f"IntegrityError: {e}")
+                form.add_error(None, "There was an issue saving the order. Please try again.")
+    else:
+        form = OrderForm()
+        formset = OrderItemFormSet(queryset=eggInventory.objects.none())
+
+    return render(request, 'core/create_order.html', {'form': form, 'formset': formset, 'farm': farm, 'egg_batches': egg_batches})
 @login_required
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
