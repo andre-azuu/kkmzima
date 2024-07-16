@@ -5,43 +5,21 @@
 <body>
     <h1>Welcome to Farm Consumer App</h1>
     {% if user.is_authenticated %}
+    <p>Hello, {{ user.username }}!</p>
+    
+    {% if user.is_farmer %}
     <a href="{% url 'farm_list' %}">My Farms</a>
-        <p>Hello, {{ user.username }}!</p>
-
-        {% if user.is_farmer %}
+    <a href="{% url 'expense_inventory_list' %}">All expenses</a>
         <p>You are a farmer.</p>
         <p>your user id is:  F0{{ user.id }}</p>
         <h1>Farm List</h1>
 
-    
-    {% for farm in farms %}
-    <table class="table table-dark table-striped">
-        <tr>
-            <th><h3>Location: {{ farm.location }}</h3></th>
-            <th><h4>Farm ID: F0{{ farm.id }}
-                <br>
-                Name: {{ farm.farmer.farmerUsername }}
-            </h4></th>
-        </tr>
-        <tr>
-            <td><strong>Number of Hens:</strong> {{ farm.numberOfHens }}</td>
-            <td><strong>Location:</strong> {{ farm.location }}</td>
-        </tr>
-        <tr>
-            <td><strong>Production Rate:</strong> {{ farm.productionRate }}%</td>
-            <td><strong>Profit/Loss:</strong> {{ farm.profitLoss }}</td>
-        </tr>
-        <tr>
-            <td><strong>Productivity:</strong> {{ farm.productivity }}%</td>
-            
-        </tr>
-    </table>
-    
-    {% endfor %}
+
         
         {% elif user.is_consumer %}
             <p>You are a consumer.</p>
             <p>your user id is: C0{{ user.id }}</p>
+            <a href="{% url 'create_order' user.id %}">New order</a>
 
         {% endif %}
     {% else %}

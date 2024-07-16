@@ -118,13 +118,26 @@
         <header>
             <h1>Kukumzima</h1>
         </header>
-        <nav>
+        
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">My Site</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'expense_inventory_list' %}">Expense Inventory</a>
+            </li>
+            <!-- Add more links as needed -->
+        </ul>
+        <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
-                <div class="user-info">
-                    <p>Welcome, {{ user.username }}!</p>
-                    <div class="user-actions">
-                        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
-                    </div>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </div>
             {% else %}
                 <div class="signup-links">

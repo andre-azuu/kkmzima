@@ -1,12 +1,55 @@
-<!-- farmers/templates/farmers/farm_detail.html -->
-
-{% extends 'base.html' %}
+<!-- core/templates/core/farm_detail.html -->
+{% extends 'core/base.html' %}
 {% block content %}
-<h2>{{ farm.name }}</h2>
+<h2>Farmer: {{ farm.farmer.farmerUsername }}</h2>
+<h2>Farm: {{ farm.name }}</h2>
 <p>Location: {{ farm.location }}</p>
-
-<p>Farmer: {{ farm.farmer.farmerUsername }}</p>
-<a href="{% url 'farm_update' farm.id %}">Edit</a> |
-<a href="{% url 'farm_delete' farm.id %}">Delete</a> |
+<a href="{% url 'farm_update' farm.id %}">Edit Farm info</a> |
+<a href="{% url 'farm_delete' farm.id %}">Delete Farm</a> |
 <a href="{% url 'farm_list' %}">Back to list</a>
+<p>
+    <ul>
+        <h2>Egg Inventory</h2>
+        <table>
+
+            {% for inventory in egg_inventories %}
+            <li>
+                Stock: {{ inventory.stock }},
+                Tray Price: {{ inventory.trayPrice }},
+                Posted On: {{ inventory.posted_on }}
+            </li>
+            {% empty %}
+            <li>No egg inventories found.</li>
+            <a href="{% url 'create_egg_inventory' %}">Add Item</a>
+            {% endfor %}
+        </table>
+        <br>
+        Total Stock available: {{ total_stock }} Trays
+        <br>
+        <a href="{% url 'egg_inventory_list' %}">Egg batches</a> |
+        <a href="{% url 'create_egg_inventory' farm.id %}">Add egg batch</a> |
+    </ul>
+    
+<h2>Farm Inventory</h2>
+<ul>
+    {% for inventory in expense_inventories %}
+    <li>
+        <strong>Particulars:</strong> {{ inventory.particulars }} |
+        <strong>Quantity:</strong> {{ inventory.quantity }} |
+        <strong>Unit Price:</strong> {{ inventory.unitPrice }} |
+      <a href="{% url 'expense_inventory_new' farm.id %}">Add Item</a> |
+
+        <a href="{% url 'expense_inventory_detail' inventory.pk %}">View</a> |
+        <a href="{% url 'expense_inventory_edit' inventory.pk %}">Edit</a> |
+        <a href="{% url 'expense_inventory_delete' inventory.pk %}">Delete</a>
+    </li>
+    {% empty %}
+    <li>No expense inventories found.</li>
+    <a href="{% url 'expense_inventory_new' farm.id %}">Add Item</a> |
+
+    {% endfor %}
+    <br>
+    <a href="{% url 'farm_list' %}">Back to Farm List</a>
+</ul>
+</p>
 {% endblock %}

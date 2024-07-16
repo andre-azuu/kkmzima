@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <h2>Create Order for {{ farm.name }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    <label for="egg_batch">Select Egg Batch:</label>
+    <select id="egg_batch" name="egg_batch">
+      {% for batch in egg_batches %}
+        <option value="{{ batch.id }}">{{ batch.quantity }} eggs</option>
+      {% endfor %}
+    </select>
+    <br>
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" min="1" required>
+    <br>
+    <button type="submit">Create Order</button>
+  </form>
+{% endblock %}

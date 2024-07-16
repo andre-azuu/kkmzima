@@ -1,12 +1,21 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Farmer, Consumer
-from .models import Farm
+from .models import User, Farmer, Consumer, eggInventory, Farm, expenseInventory
+
+class ExpenseInventoryForm(forms.ModelForm):
+    class Meta:
+        model = expenseInventory
+        fields = [ 'particulars', 'quantity', 'unitPrice']
+
+class eggInventoryForm(forms.ModelForm):
+    class Meta:
+        model = eggInventory
+        fields = ['stock', 'trayPrice']  
 
 class FarmForm(forms.ModelForm):
     class Meta:
         model = Farm
-        fields = ['farmer', 'name', 'location']
+        fields = [ 'name', 'location']
 
 class FarmerSignUpForm(UserCreationForm):
     farmerPhone = forms.CharField(max_length=15, required=False)

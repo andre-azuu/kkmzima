@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <h2>Expense Inventory List</h2>
+  <ul>
+    {% for inventory in expense_inventories %}
+      <li>
+        <strong>Farm:</strong> {{ inventory.farm.name }} |
+        <strong>Particulars:</strong> {{ inventory.particulars }} |
+        <strong>Quantity:</strong> {{ inventory.quantity }} |
+        <strong>Unit Price:</strong> {{ inventory.unitPrice }} |
+        <strong>Total Cost:</strong> {{ inventory.total_cost }} |
+        <br>
+        <a href="{% url 'expense_inventory_detail' inventory.pk %}">View</a> |
+        <a href="{% url 'expense_inventory_edit' inventory.pk %}">Edit</a> |
+        <a href="{% url 'expense_inventory_delete' inventory.pk %}">Delete</a>
+      </li>
+    {% empty %}
+      <li>No expense inventories found.</li>
+      <a href="{% url 'expense_inventory_new' %}">Add Item</a>
+      {% endfor %}
+    </ul>
+      <br>
+  <a href="{%url 'farm_list' %}">Home</a>
+{% endblock %}

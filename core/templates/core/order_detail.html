@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <h2>Order {{ order.id }}</h2>
+  <p>Consumer: {{ order.consumer.username }}</p>
+  <p>Farm: {{ order.farm.name }}</p>
+  <p>Created at: {{ order.created_at }}</p>
+  <h3>Items</h3>
+  <ul>
+    {% for item in order.items.all %}
+      <li>{{ item.quantity }} of {{ item.egg_batch }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <h2>Expense Inventory Detail</h2>
+  <table>
+    <tr>
+      <th>Farm</th>
+      <td>{{ object.farm.name }}</td>
+    </tr>
+    <tr>
+      <th>Particulars</th>
+      <td>{{ object.particulars }}</td>
+    </tr>
+    <tr>
+      <th>Quantity</th>
+      <td>{{ object.quantity }}</td>
+    </tr>
+    <tr>
+      <th>Unit Price</th>
+      <td>{{ object.unitPrice }}</td>
+    </tr>
+    <tr>
+      <th>Total Cost</th>
+      <td>{{ total_cost }}</td>
+    </tr>
+  </table>
+  <p>
+    <a href="{% url 'expense_inventory_edit' object.pk %}">Edit</a> | 
+    <a href="{% url 'expense_inventory_delete' object.pk %}">Delete</a>
+  </p>
+  <a href="{% url 'farm_list' %}"> Back to farms</a>|
+  <a href="{% url 'expense_inventory_list' %}">View all expenses</a>
+  
+{% endblock %}

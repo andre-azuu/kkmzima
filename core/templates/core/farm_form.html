@@ -5,7 +5,7 @@
     <title>Create New Farm</title>
 </head>
 <body>
-    <h2>Create New Farm</h2>
+    <h2>{% if object %}Update{% else %}Create{% endif %} Farm</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
