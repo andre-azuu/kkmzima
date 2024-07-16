@@ -10,7 +10,7 @@ class ExpenseInventoryForm(forms.ModelForm):
 class eggInventoryForm(forms.ModelForm):
     class Meta:
         model = eggInventory
-        fields = ['stock', 'trayPrice']  
+        fields = ['stock', 'trayPrice', 'batch_number']
 
 class FarmForm(forms.ModelForm):
     class Meta:

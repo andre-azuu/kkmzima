@@ -26,8 +26,8 @@ urlpatterns = [
     path('create-farm/', FarmCreateView.as_view(), name='farm_create'),
     path('<int:pk>/update/', FarmUpdateView.as_view(), name='farm_update'),
     path('<int:pk>/delete/', FarmDeleteView.as_view(), name='farm_delete'),
+    path('create-egg-inventory/<int:farm_id>/', views.create_egg_inventory, name='create_egg_inventory'),
 
-    path('create-egg-inventory/<int:farm>/', eggInventoryCreateView.as_view(), name='create_egg_inventory'),
     path('egg-inventory-list/', egg_inventory_list, name='egg_inventory_list'),
 
     path('expense-inventory/new/<int:farm_id>/', ExpenseInventoryCreateView.as_view(), name='expense_inventory_new'),

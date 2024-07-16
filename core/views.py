@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.views.generic.edit import CreateView
-
+from django.urls import reverse
 from django.db.models import Sum
 
 
@@ -125,12 +125,12 @@ class FarmCreateView(LoginRequiredMixin,CreateView):
             form.instance.farmer = user.farmer
             response = super().form_valid(form)
 
-            # Automatically create an eggInventory instance for the new farm
             eggInventory.objects.create(
                 farm=form.instance,
                 stock=0,  # Initial stock value, adjust as needed
-                trayPrice=0  # Initial trayPrice value, adjust as needed
-            )
+                trayPrice=0,  # Initial trayPrice value, adjust as needed
+                batch_number='default_batch'  # Ensure batch_number has a default value
+        )
 
             return response        
  
@@ -165,6 +165,20 @@ class eggInventoryCreateView(CreateView):
 
         # Call the parent form_valid method to save the form
         return super().form_valid(form)
+    
+def create_egg_inventory(request, farm_id):
+    farm = get_object_or_404(Farm, id=farm_id)
+    if request.method == 'POST':
+        form = eggInventoryForm(request.POST)
+        if form.is_valid():
+            egg_inventory = form.save(commit=False)
+            egg_inventory.farm = farm
+            egg_inventory.batch_number = 'default_batch'  # Ensure batch_number is provided
+            egg_inventory.save()
+            return redirect(reverse('farm_detail', kwargs={'pk': farm.id}))
+    else:
+        form = eggInventoryForm()
+    return render(request, 'core/create_egg_inventory.html', {'form': form, 'farm': farm})
     
 def egg_inventory_list(request):
     egg_inventories = eggInventory.objects.all()
@@ -227,18 +241,9 @@ class ExpenseInventoryListView(ListView):
 def create_order(request, farm_id):
     if not request.user.is_consumer:
         raise PermissionDenied
-    farm = get_object_or_404(Farm, id=farm_id)
-    
-    if request.method == 'POST':
-        order = Order.objects.create(consumer=request.user, farm=farm)
-        egg_batch_id = request.POST.get('egg_batch')
-        quantity = int(request.POST.get('quantity'))
-        egg_batch = get_object_or_404(EggBatch, id=egg_batch_id)
-        OrderItem.objects.create(order=order, egg_batch=egg_batch, quantity=quantity)
-        return redirect('order_detail', order_id=order.id)
-    else:
-        egg_batches = EggBatch.objects.filter(farm=farm)
-        return render(request, 'core/create_order.html', {'farm': farm, 'egg_batches': egg_batches})
+    farm = get_object_or_404(Farm, pk=farm_id)
+    egg_batches = EggBatch.objects.filter(farm=farm)
+    return render(request, 'core/create_order.html', {'farm': farm, 'egg_batches': egg_batches})
 
 @login_required
 def order_detail(request, order_id):

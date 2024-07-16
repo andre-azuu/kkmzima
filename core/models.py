@@ -31,23 +31,30 @@ class Farm(models.Model):
     location = models.CharField(max_length=255)
     
     
+    @property
+    def total_stock(self):
+        return self.egg_inventories.aggregate(total=models.Sum('stock'))['total'] or 0
+
     def __str__(self):
-        return self.name    
+        return self.name 
     
 class eggInventory(models.Model):
-    
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE, related_name='egg_inventories')
-    stock = models.IntegerField()  # Number of trays of eggs
+    stock = models.IntegerField()
     trayPrice = models.IntegerField()
     posted_on = models.DateTimeField(auto_now_add=True)
-    batch_number = models.CharField(max_length=100)
+    batch_number = models.CharField(max_length=100, default='default_batch')
 
     def __str__(self):
         return f'{self.batch_number} - {self.farm.name}'
 
+
 class EggBatch(models.Model):
-    farm = models.CharField(max_length=220)
+    farm = models.ForeignKey(eggInventory, on_delete=models.CASCADE, related_name='egg_batches')
     quantity = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.farm.name} - {self.quantity}'
 
 class expenseInventory(models.Model):
     farm = models.ForeignKey(Farm, on_delete=models.CASCADE, related_name='expense_inventories')

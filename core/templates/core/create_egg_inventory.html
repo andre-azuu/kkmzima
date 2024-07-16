@@ -1,0 +1,11 @@
+<!-- core/templates/core/create_egg_inventory.html -->
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <h2>Create Egg Inventory for {{ farm.name }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}
