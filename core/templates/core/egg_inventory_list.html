@@ -1,27 +1,24 @@
 <!-- egg_inventory_list.html -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Egg Inventory List</title>
-</head>
-<body>
-    <h1>Egg batches</h1>
+{% extends 'core/base.html' %}
+{% block content %}
 
-    <ul>
-        {% for inventory in egg_inventories %}
-            <li>
-                Stock: {{ inventory.stock }}, 
-                Tray Price: {{ inventory.trayPrice }}, 
-                Farm: {{ inventory.farm.name }},
-                Posted On: {{ inventory.posted_on }}
-            </li>
-        {% empty %}
-            <li>No egg inventories found.</li>
-        {% endfor %}
-    </ul>
+<h1>Egg batches</h1>
+
+<ul>
+    {% for inventory in egg_inventories %}
+    <li>
+        Stock: {{ inventory.stock }}, 
+        Tray Price: {{ inventory.trayPrice }}, 
+        Farm: {{ inventory.farm.name }},
+        Posted On: {{ inventory.posted_on }}
+    </li>
+    {% empty %}
+    <li>No egg inventories found.</li>
+    {% endfor %}
+</ul>
 
 
 </body>
+{% endblock %}
 </html>

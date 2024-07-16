@@ -1,116 +1,131 @@
-<!-- core/templates/base.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Kukumzima App{% endblock %}</title>
+    
+    <title>{% block title %}Kukumzima{% endblock %}</title>
+    <link 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+    rel="stylesheet">
+    
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        header {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            margin-bottom: 20px;
-            border-radius: 5px 5px 0 0;
-        }
-        nav {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        nav a {
-            text-decoration: none;
-            color: #007bff;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-        .content {
-            padding: 20px;
-        }
-        .user-info {
-            margin-bottom: 20px;
-            background-color: #f7f7f7;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .user-info p {
+            font-family: Arial, sans-serif; /* Fallback font */
+            background-color: #f0f0f0; /* Light grey background */
+            color: #333333; /* Dark text color */
             margin: 0;
-            font-weight: bold;
+            padding: 0;
+            background-image: url('https://images5.alphacoders.com/867/867097.jpg ');
+            background-size:cover; /* Adjusts the background image size */
+            background-repeat: no-repeat; /* Prevents the background image from repeating */
         }
-        .user-actions {
-            margin-top: 10px;
+        
+        h1 {
+            font-family: 'Orbitron', sans-serif; /* Orbitron font for H1 */
+            color: orange; /* Orange text color */
+            text-align: center;
+            margin-top: 20px;
         }
-        .user-actions a {
+        
+        nav {
+            font-family: 'Mali', cursive; /* Mali font for navigation */
+            background: #ced4db; /* Light grey background */
+            color: #333333; /* Dark text color */
+            padding: 10px;
+            text-align: center;
+        }
+        
+        nav a {
+            color: #333333; /* Dark text color */
+            margin: 2px;
             text-decoration: none;
-            color: #007bff;
-            margin-right: 10px;
         }
-        .logout-btn {
-            background-color: #dc3545;
-            color: #fff;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
+        
+        .navbar {
+            background-color: #343a40; /* Dark background for navbar */
         }
-        .logout-btn:hover {
-            background-color: #c82333;
+        
+        .navbar .navbar-brand, .navbar .navbar-nav .nav-link {
+            color: #ffffff; /* White text color for navbar items */
         }
+        
+        .navbar .nav-link {
+            padding: 7px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .navbar .nav-link:hover {
+            background-color: #9493934e; /* Light grey background on hover */
+            border-radius: 4px;
+        }
+        
         .signup-links {
-            margin-top: 10px;
+            font-size: 14px;
+            color: orange; 
         }
+        
         .signup-links a {
+            color: orange;
             text-decoration: none;
-            color: #007bff;
-            margin-right: 10px;
+            margin: 0 5px;
         }
-        /* Form Styling */
-        form {
-            margin-bottom: 20px;
+        
+        .signup-links a:hover {
+            text-decoration: underline;
         }
-        label {
+        
+        .content {
+            margin-top: 80px; /* Adjust as needed for fixed navbar height */
+            padding: 20px;
+            border-radius: 40px;
+            background-color: rgba(0, 0, 0, 0.6); /* Adjust transparency here */
+            color: #ffffff; /* Text color */
+            padding: 20px;
+            border-radius: 10px
+        }
+
+        .signup-container {
+           display: flex;
+            justify-content: center;
+        }
+
+        .signup-item {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-item img {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            width: 200px; /* Adjust size as needed */
+            height: auto;
+            border-radius: 8px;
         }
-        input[type="text"],
-        input[type="password"],
-        input[type="email"],
-        input[type="tel"],
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+        .navbar-custom {
+            background-color: rgba(0, 0, 0, 0.8); /* Adjust transparency here */
         }
-        button[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+
+        .navbar-custom .nav-link {
+            color: #ffffff; /* Text color */
+            transition: color 0.3s;
         }
-        button[type="submit"]:hover {
-            background-color: #0056b3;
+
+        .navbar-custom .nav-link:hover {
+            color: #f8f9fa; /* Hover color */
         }
+
     </style>
 </head>
 <body>
@@ -119,38 +134,38 @@
             <h1>Kukumzima</h1>
         </header>
         
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">My Site</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'expense_inventory_list' %}">Expense Inventory</a>
-            </li>
-            <!-- Add more links as needed -->
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </div>
-            {% else %}
-                <div class="signup-links">
-                    <a href="{% url 'login' %}">Login</a> |
-                    <a href="{% url 'farmer_signup' %}">Sign Up as Farmer</a> |
-                    <a href="{% url 'consumer_signup' %}">Sign Up as Consumer</a>
-                </div>
-            {% endif %}
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top navbar-custom">
+            <a class="navbar-brand" href="/" style="font-family: 'Orbitron', sans-serif;color: orange;">Kukumzima</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    
+                    <div class="signup-links">
+                        <a href="{% url 'login' %}">Login</a> |
+                        <a href="{% url 'farmer_signup' %}">Sign Up as Farmer</a> |
+                        <a href="{% url 'consumer_signup' %}">Sign Up as Consumer</a>
+                    </div>
+                    {% endif %}
+                </ul>
+            </div>
         </nav>
+         
         <div class="content">
             {% block content %}
             {% endblock %}
         </div>
     </div>
+    
+    <!-- Bootstrap JS and jQuery (for Bootstrap functionality) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

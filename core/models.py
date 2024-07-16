@@ -30,19 +30,23 @@ class Farm(models.Model):
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=255)
     
+    
     def __str__(self):
         return self.name    
     
 class eggInventory(models.Model):
     
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, related_name='egg_inventories')
     stock = models.IntegerField()  # Number of trays of eggs
     trayPrice = models.IntegerField()
-    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, related_name='egg_inventories')
     posted_on = models.DateTimeField(auto_now_add=True)
+    batch_number = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f'{self.batch_number} - {self.farm.name}'
 
 class EggBatch(models.Model):
-    farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
+    farm = models.CharField(max_length=220)
     quantity = models.IntegerField()
 
 class expenseInventory(models.Model):
@@ -63,8 +67,8 @@ class expenseInventory(models.Model):
 
 
 class Order(models.Model):
-    consumer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
+    consumer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders')
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, related_name='orders')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -72,8 +76,8 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    egg_batch = models.ForeignKey(EggBatch, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    egg_batch = models.ForeignKey(eggInventory, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
 
     def __str__(self):
-        return f'{self.quantity} of {self.egg_batch} in order {self.order.id}'
+        return f'{self.quantity} from {self.egg_batch.batch_number}'

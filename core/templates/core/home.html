@@ -3,36 +3,34 @@
 
 {% block content %}
 <body>
-    <h1>Welcome to Farm Consumer App</h1>
+    <h1>Welcome Kukumzima App</h1>
     {% if user.is_authenticated %}
-    <p>Hello, {{ user.username }}!</p>
-    
-    {% if user.is_farmer %}
-    <a href="{% url 'farm_list' %}">My Farms</a>
-    <a href="{% url 'expense_inventory_list' %}">All expenses</a>
-        <p>You are a farmer.</p>
-        <p>your user id is:  F0{{ user.id }}</p>
-        <h1>Farm List</h1>
-
-
+        <p>Hello, {{ user.username }}!</p>
+        
+        {% if user.is_farmer %}
+            <p>You are a farmer.</p>
+            <p>Your user ID is: F0{{ user.id }}</p>
+            <a href="{% url 'farm_list' %}">My Farms</a>
+            <a href="{% url 'expense_inventory_list' %}">All Expenses</a>
         
         {% elif user.is_consumer %}
             <p>You are a consumer.</p>
-            <p>your user id is: C0{{ user.id }}</p>
-            <a href="{% url 'create_order' user.id %}">New order</a>
-
+            <p>Your user ID is: C0{{ user.id }}</p>
+            <a href="{% url 'create_order' user.id %}">New Order</a>
+        
         {% endif %}
+    
     {% else %}
-    <div>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvLlHcWiwsH5lrsmXWNBhKsAxlNscJDErwoYQ_IbWjDFE5JUsvhvOf4ZYpa47vYBgxags&usqp=CAU" alt="Farmer Module">
-        <a href="{% url 'farmer_signup' %}">Sign Up as Farmer</a>
-    </div>
-        <div>
-            <img src="https://rafterwranch.net/wp-content/uploads/2018/08/eggs-grocery-store.jpg" alt="Consumer Module">
-            <a href="{% url 'consumer_signup' %}">Sign Up as Consumer</a>
-
+    <div class="signup-container">
+        <div class="signup-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvLlHcWiwsH5lrsmXWNBhKsAxlNscJDErwoYQ_IbWjDFE5JUsvhvOf4ZYpa47vYBgxags&usqp=CAU" alt="Farmer Module">
+            <a href="{% url 'login' %}">Farmers </a>
         </div>
+        <div class="signup-item">
+            <img src="https://rafterwranch.net/wp-content/uploads/2018/08/eggs-grocery-store.jpg" alt="Consumer Module">
+            <a href="{% url 'login' %}">Consumers</a>
+        </div>
+    </div>
     {% endif %}
 </body>
-
 {% endblock %}

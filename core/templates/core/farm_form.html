@@ -1,8 +1,9 @@
 <!-- core/templates/core/farm_form.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create New Farm</title>
+{% extends 'core/base.html' %}
+{% block content %}
+
+
+<title>Create New Farm</title>
 </head>
 <body>
     <h2>{% if object %}Update{% else %}Create{% endif %} Farm</h2>
@@ -12,5 +13,5 @@
         <button type="submit">Submit</button>
     </form>
 </body>
-</html>
+{% endblock %}
 

@@ -65,6 +65,8 @@ def farm_list(request):
     farms = Farm.objects.filter(farmer__user=request.user)
     return render(request, 'core/farm_list.html', {'farms': farms})
 
+
+
 class FarmListView(ListView):
     model = Farm
     template_name = 'core/farm_list.html'
